@@ -1,0 +1,450 @@
+'use client';
+
+import { useState, useEffect, useCallback } from 'react';
+import axios from 'axios';
+import Header from '@/components/layout/Header';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { Badge } from '@/components/ui/badge';
+import { Card, CardContent } from '@/components/ui/card';
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from '@/components/ui/dialog';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { toast } from '@/hooks/use-toast';
+import { Plus, Edit2, Trash2, ToggleLeft, ToggleRight, Users, Check, Search } from 'lucide-react';
+import { PhoneInputField } from '@/components/ui/phone-input';
+
+const ASSIGNABLE_ENTITIES = ['social_accounts', 'niches', 'email_accounts', 'phones'];
+
+function userInitials(u) {
+  return (u?.name || u?.email || '?').split(' ').map((w) => w[0]).join('').toUpperCase().slice(0, 2);
+}
+
+function UserChip({ user }) {
+  return (
+    <span title={user.name || user.email}
+      className="inline-flex items-center justify-center w-6 h-6 rounded-full bg-red-600 text-white text-[10px] font-bold ring-2 ring-white -ml-1 first:ml-0 flex-shrink-0">
+      {userInitials(user)}
+    </span>
+  );
+}
+
+function AssignModal({ item, entity, users, onClose, onSaved }) {
+  const [selected, setSelected] = useState(() => new Set((item.assigned_users || []).map((u) => u._id || u)));
+  const [search, setSearch] = useState('');
+  const [saving, setSaving] = useState(false);
+
+  const filtered = users.filter((u) =>
+    u.name?.toLowerCase().includes(search.toLowerCase()) ||
+    u.email?.toLowerCase().includes(search.toLowerCase())
+  );
+
+  const toggle = (id) => setSelected((prev) => {
+    const next = new Set(prev);
+    next.has(id) ? next.delete(id) : next.add(id);
+    return next;
+  });
+
+  const save = async () => {
+    setSaving(true);
+    try {
+      await axios.patch(`/api/admin/config/${entity}`, {
+        id: item._id,
+        assigned_users: [...selected],
+      });
+      toast({ title: 'Assignments saved', variant: 'success' });
+      onSaved();
+    } catch {
+      toast({ title: 'Failed to save', variant: 'destructive' });
+    } finally {
+      setSaving(false);
+    }
+  };
+
+  return (
+    <Dialog open onOpenChange={(open) => { if (!open) onClose(); }}>
+      <DialogContent className="max-w-md">
+        <DialogHeader>
+          <DialogTitle className="flex items-center gap-2">
+            <Users className="h-4 w-4 text-red-500" />
+            Assign Team Members
+          </DialogTitle>
+          <p className="text-xs text-gray-400 mt-1">
+            {item.account_name || item.name || item.label || 'This item'} · {selected.size} assigned
+          </p>
+        </DialogHeader>
+
+        {/* Search */}
+        <div className="relative">
+          <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-gray-400" />
+          <Input
+            className="pl-8 h-8 text-sm"
+            placeholder="Search team members…"
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+          />
+        </div>
+
+        {/* User list */}
+        <div className="max-h-64 overflow-y-auto space-y-1 -mx-1 pr-1">
+          {filtered.length === 0 ? (
+            <p className="text-sm text-gray-400 text-center py-6">No team members found</p>
+          ) : filtered.map((u) => {
+            const checked = selected.has(u._id);
+            return (
+              <button
+                key={u._id}
+                onClick={() => toggle(u._id)}
+                className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-left transition-colors ${
+                  checked ? 'bg-red-50 border border-red-200' : 'hover:bg-gray-50 border border-transparent'
+                }`}
+              >
+                <span className={`w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold flex-shrink-0 ${
+                  checked ? 'bg-red-600 text-white' : 'bg-gray-200 text-gray-600'
+                }`}>
+                  {userInitials(u)}
+                </span>
+                <div className="flex-1 min-w-0">
+                  <p className="text-sm font-medium text-gray-900 truncate">{u.name}</p>
+                  <p className="text-xs text-gray-400 truncate">{u.email}</p>
+                </div>
+                {checked && <Check className="h-4 w-4 text-red-600 flex-shrink-0" />}
+              </button>
+            );
+          })}
+        </div>
+
+        <DialogFooter className="gap-2">
+          <Button variant="outline" size="sm" onClick={onClose}>Cancel</Button>
+          <Button size="sm" disabled={saving} onClick={save} className="bg-red-600 hover:bg-red-700 text-white">
+            {saving ? 'Saving…' : 'Save Assignments'}
+          </Button>
+        </DialogFooter>
+      </DialogContent>
+    </Dialog>
+  );
+}
+
+const TABS = [
+  { id: 'companies', label: 'Companies' },
+  { id: 'platforms', label: 'Platforms' },
+  { id: 'social_accounts', label: 'Social ID Accounts' },
+  { id: 'niches', label: 'Target Niches' },
+  { id: 'email_accounts', label: 'Email Accounts' },
+  { id: 'phones', label: 'Phone Options' },
+];
+
+function EntityTable({ entity, items, users, onToggle, onDelete, onEdit, onAssign }) {
+  const isAssignable = ASSIGNABLE_ENTITIES.includes(entity);
+  if (items.length === 0) return <p className="text-sm text-gray-400 text-center py-8">No items yet.</p>;
+
+  return (
+    <div className="divide-y">
+      {items.map((item) => {
+        const assignees = item.assigned_users || [];
+        return (
+          <div key={item._id} className="flex items-center gap-3 py-3 px-1">
+            <div className="flex-1 min-w-0">
+              <p className="text-sm font-medium truncate">
+                {item.name || item.label || item.account_name || item.title || item.business_name}
+              </p>
+              <p className="text-xs text-gray-400 truncate">
+                {item.type && <span className="capitalize mr-2">{item.type}</span>}
+                {item.email_address && item.email_address}
+                {item.number && item.number}
+                {item.platform_id?.name && `Platform: ${item.platform_id.name}`}
+              </p>
+            </div>
+
+            {/* Assigned user chips */}
+            {isAssignable && (
+              <div className="flex items-center flex-shrink-0">
+                {assignees.length === 0 ? (
+                  <span className="text-xs text-gray-300 italic">Unassigned</span>
+                ) : (
+                  <div className="flex items-center">
+                    {assignees.slice(0, 4).map((u) => <UserChip key={u._id || u} user={u} />)}
+                    {assignees.length > 4 && (
+                      <span className="inline-flex items-center justify-center w-6 h-6 rounded-full bg-gray-200 text-gray-600 text-[10px] font-bold ring-2 ring-white -ml-1">
+                        +{assignees.length - 4}
+                      </span>
+                    )}
+                  </div>
+                )}
+              </div>
+            )}
+
+            <Badge variant={item.is_active ? 'success' : 'outline'} className="text-xs shrink-0">
+              {item.is_active ? 'Active' : 'Inactive'}
+            </Badge>
+            <div className="flex items-center gap-1">
+              {isAssignable && (
+                <Button variant="ghost" size="sm" onClick={() => onAssign(item)} title="Assign users">
+                  <Users className="h-4 w-4 text-blue-500" />
+                </Button>
+              )}
+              <Button variant="ghost" size="sm" onClick={() => onToggle(item)}>
+                {item.is_active
+                  ? <ToggleRight className="h-4 w-4 text-green-500" />
+                  : <ToggleLeft className="h-4 w-4 text-gray-400" />}
+              </Button>
+              <Button variant="ghost" size="sm" onClick={() => onEdit(item)}>
+                <Edit2 className="h-4 w-4 text-gray-500" />
+              </Button>
+              <Button variant="ghost" size="sm" onClick={() => onDelete(item)}>
+                <Trash2 className="h-4 w-4 text-red-400" />
+              </Button>
+            </div>
+          </div>
+        );
+      })}
+    </div>
+  );
+}
+
+function EntityForm({ entity, platforms, item, onSave, onCancel }) {
+  const isEdit = !!item;
+  const [form, setForm] = useState(item ? { ...item } : { is_active: true });
+  const [saving, setSaving] = useState(false);
+
+  const set = (k, v) => setForm((f) => ({ ...f, [k]: v }));
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setSaving(true);
+    try {
+      if (isEdit) {
+        await axios.patch(`/api/admin/config/${entity}`, { id: item._id, ...form });
+        toast({ title: 'Updated', variant: 'success' });
+      } else {
+        await axios.post(`/api/admin/config/${entity}`, form);
+        toast({ title: 'Created', variant: 'success' });
+      }
+      onSave();
+    } catch (err) {
+      toast({ title: err.response?.data?.error || 'Failed to save', variant: 'destructive' });
+    } finally {
+      setSaving(false);
+    }
+  };
+
+  return (
+    <form onSubmit={handleSubmit} className="space-y-4">
+      {entity === 'companies' && (
+        <>
+          <div className="space-y-1"><Label>Company Name</Label><Input value={form.name || ''} onChange={(e) => set('name', e.target.value)} required /></div>
+          <div className="space-y-1"><Label>Description (optional)</Label><Input value={form.description || ''} onChange={(e) => set('description', e.target.value)} /></div>
+        </>
+      )}
+
+      {entity === 'platforms' && (
+        <>
+          <div className="space-y-1"><Label>Name</Label><Input value={form.name || ''} onChange={(e) => set('name', e.target.value)} required /></div>
+          <div className="space-y-1"><Label>Type</Label>
+            <Select value={form.type || ''} onValueChange={(v) => set('type', v)}>
+              <SelectTrigger><SelectValue placeholder="Select type" /></SelectTrigger>
+              <SelectContent>
+                <SelectItem value="social">Social</SelectItem>
+                <SelectItem value="dataentry">Data Entry</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
+          <div className="space-y-1"><Label>Icon Slug (optional)</Label><Input value={form.icon_slug || ''} onChange={(e) => set('icon_slug', e.target.value)} placeholder="e.g. facebook" /></div>
+        </>
+      )}
+
+      {entity === 'social_accounts' && (
+        <>
+          <div className="space-y-1"><Label>Platform</Label>
+            <Select value={form.platform_id || ''} onValueChange={(v) => set('platform_id', v)}>
+              <SelectTrigger><SelectValue placeholder="Select platform" /></SelectTrigger>
+              <SelectContent>
+                {platforms.filter((p) => p.type === 'social').map((p) => (
+                  <SelectItem key={p._id} value={p._id}>{p.name}</SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          </div>
+          <div className="space-y-1"><Label>Account Name</Label><Input value={form.account_name || ''} onChange={(e) => set('account_name', e.target.value)} required /></div>
+          <div className="space-y-1"><Label>Account URL (optional)</Label><Input type="url" value={form.account_url || ''} onChange={(e) => set('account_url', e.target.value)} /></div>
+        </>
+      )}
+
+      {entity === 'niches' && (
+        <>
+          <div className="space-y-1"><Label>Name</Label><Input value={form.name || ''} onChange={(e) => set('name', e.target.value)} required /></div>
+          <div className="space-y-1"><Label>Description (optional)</Label><Input value={form.description || ''} onChange={(e) => set('description', e.target.value)} /></div>
+        </>
+      )}
+
+      {entity === 'email_accounts' && (
+        <>
+          <div className="space-y-1"><Label>Name / Label</Label><Input placeholder="e.g. Sales Team" value={form.label || ''} onChange={(e) => set('label', e.target.value)} required /></div>
+          <div className="space-y-1"><Label>Email Address</Label><Input type="email" placeholder="sales@example.com" value={form.email_address || ''} onChange={(e) => set('email_address', e.target.value)} required /></div>
+        </>
+      )}
+
+      {entity === 'phones' && (
+        <>
+          <div className="space-y-1"><Label>Label</Label><Input value={form.label || ''} onChange={(e) => set('label', e.target.value)} required /></div>
+          <div className="space-y-1">
+            <Label>Number</Label>
+            <PhoneInputField value={form.number || ''} onChange={(val) => set('number', val || '')} placeholder="Phone number" />
+          </div>
+          <div className="space-y-1"><Label>Type</Label>
+            <Select value={form.type || ''} onValueChange={(v) => set('type', v)}>
+              <SelectTrigger><SelectValue placeholder="Select type" /></SelectTrigger>
+              <SelectContent>
+                <SelectItem value="sim">SIM</SelectItem>
+                <SelectItem value="voip">VoIP</SelectItem>
+                <SelectItem value="softphone">Softphone</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
+        </>
+      )}
+
+
+      <DialogFooter>
+        <Button type="button" variant="outline" onClick={onCancel}>Cancel</Button>
+        <Button type="submit" disabled={saving}>{saving ? 'Saving...' : isEdit ? 'Update' : 'Create'}</Button>
+      </DialogFooter>
+    </form>
+  );
+}
+
+export default function AdminConfigPage() {
+  const [activeTab, setActiveTab] = useState('platforms');
+  const [items, setItems] = useState([]);
+  const [platforms, setPlatforms] = useState([]);
+  const [users, setUsers] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [showForm, setShowForm] = useState(false);
+  const [editItem, setEditItem] = useState(null);
+  const [assignItem, setAssignItem] = useState(null);
+
+  const fetchItems = useCallback(async () => {
+    setLoading(true);
+    try {
+      const res = await axios.get(`/api/admin/config/${activeTab}`);
+      setItems(res.data);
+    } catch {
+      toast({ title: 'Failed to load data', variant: 'destructive' });
+    } finally {
+      setLoading(false);
+    }
+  }, [activeTab]);
+
+  useEffect(() => { fetchItems(); }, [fetchItems]);
+
+  // Load platforms and users once
+  useEffect(() => {
+    axios.get('/api/admin/config/platforms').then((r) => setPlatforms(r.data)).catch(() => {});
+    axios.get('/api/users').then((r) => setUsers(r.data.filter((u) => u.isActive))).catch(() => {});
+  }, []);
+
+  const handleToggle = async (item) => {
+    try {
+      await axios.patch(`/api/admin/config/${activeTab}`, { id: item._id, is_active: !item.is_active });
+      setItems((prev) => prev.map((i) => i._id === item._id ? { ...i, is_active: !i.is_active } : i));
+    } catch {
+      toast({ title: 'Failed to update', variant: 'destructive' });
+    }
+  };
+
+  const handleDelete = async (item) => {
+    if (!confirm('Delete this item? This cannot be undone.')) return;
+    try {
+      await axios.delete(`/api/admin/config/${activeTab}?id=${item._id}`);
+      setItems((prev) => prev.filter((i) => i._id !== item._id));
+      toast({ title: 'Deleted', variant: 'success' });
+    } catch {
+      toast({ title: 'Failed to delete', variant: 'destructive' });
+    }
+  };
+
+  const handleFormSave = () => {
+    setShowForm(false);
+    setEditItem(null);
+    fetchItems();
+  };
+
+  return (
+    <>
+      <Header title="Admin Configuration" subtitle="Manage master data for platforms, niches, and outreach" />
+      <div className="flex-1 overflow-auto p-4 md:p-6">
+
+        {/* Tab bar */}
+        <div className="flex gap-1 border-b mb-6 overflow-x-auto">
+          {TABS.map((tab) => (
+            <button
+              key={tab.id}
+              onClick={() => setActiveTab(tab.id)}
+              className={`px-3 py-2.5 text-sm font-medium whitespace-nowrap border-b-2 transition-colors ${
+                activeTab === tab.id
+                  ? 'border-red-600 text-red-600'
+                  : 'border-transparent text-gray-500 hover:text-gray-900'
+              }`}
+            >
+              {tab.label}
+            </button>
+          ))}
+        </div>
+
+        <div className="flex items-center justify-between mb-4">
+          <p className="text-sm text-gray-500">{items.length} items</p>
+          <Button size="sm" onClick={() => { setEditItem(null); setShowForm(true); }}>
+            <Plus className="h-4 w-4 mr-2" /> Add {TABS.find((t) => t.id === activeTab)?.label}
+          </Button>
+        </div>
+
+        <Card>
+          <CardContent className="p-4">
+            {loading ? (
+              <div className="space-y-2">
+                {Array.from({ length: 4 }).map((_, i) => (
+                  <div key={i} className="h-12 bg-gray-100 rounded animate-pulse" />
+                ))}
+              </div>
+            ) : (
+              <EntityTable
+                entity={activeTab}
+                items={items}
+                users={users}
+                onToggle={handleToggle}
+                onDelete={handleDelete}
+                onEdit={(item) => { setEditItem(item); setShowForm(true); }}
+                onAssign={(item) => setAssignItem(item)}
+              />
+            )}
+          </CardContent>
+        </Card>
+      </div>
+
+      <Dialog open={showForm} onOpenChange={(open) => { if (!open) { setShowForm(false); setEditItem(null); } }}>
+        <DialogContent className="max-w-lg">
+          <DialogHeader>
+            <DialogTitle>{editItem ? 'Edit' : 'Add'} {TABS.find((t) => t.id === activeTab)?.label}</DialogTitle>
+          </DialogHeader>
+          <EntityForm
+            entity={activeTab}
+            platforms={platforms}
+            item={editItem}
+            onSave={handleFormSave}
+            onCancel={() => { setShowForm(false); setEditItem(null); }}
+          />
+        </DialogContent>
+      </Dialog>
+
+      {assignItem && (
+        <AssignModal
+          item={assignItem}
+          entity={activeTab}
+          users={users}
+          onClose={() => setAssignItem(null)}
+          onSaved={() => { setAssignItem(null); fetchItems(); }}
+        />
+      )}
+    </>
+  );
+}
