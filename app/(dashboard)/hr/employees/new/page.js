@@ -456,11 +456,11 @@ export default function AddEmployeePage() {
             </div>
             <div>
               {step < maxStep ? (
-                <Button size="sm" onClick={() => setStep(step + 1)} className="bg-red-600 hover:bg-red-700">
+                <Button size="sm" onClick={() => setStep(step + 1)} className="bg-indigo-600 hover:bg-indigo-700">
                   Next <ArrowRight className="h-4 w-4 ml-1.5" />
                 </Button>
               ) : (
-                <Button size="sm" onClick={handleSubmit} disabled={saving} className="bg-red-600 hover:bg-red-700">
+                <Button size="sm" onClick={handleSubmit} disabled={saving} className="bg-indigo-600 hover:bg-indigo-700">
                   {saving ? (
                     <><span className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin mr-2" /> Saving...</>
                   ) : (

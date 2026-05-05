@@ -24,7 +24,7 @@ const STATUS_CONFIG = {
   under_review:     { label: 'Under Review',     dot: 'bg-yellow-400',  pill: 'bg-yellow-50 text-yellow-700 ring-1 ring-yellow-200' },
   trial:            { label: 'Trial / Pilot',    dot: 'bg-blue-400',    pill: 'bg-blue-50 text-blue-700 ring-1 ring-blue-200' },
   completed:        { label: 'Completed',         dot: 'bg-teal-400',    pill: 'bg-teal-50 text-teal-700 ring-1 ring-teal-200' },
-  churned:          { label: 'Churned',           dot: 'bg-red-500',     pill: 'bg-red-50 text-red-700 ring-1 ring-red-200' },
+  churned:          { label: 'Churned',           dot: 'bg-red-500',     pill: 'bg-red-50 text-red-700 ring-1 ring-indigo-200' },
   potential_upsell: { label: 'Potential Upsell', dot: 'bg-purple-400',  pill: 'bg-purple-50 text-purple-700 ring-1 ring-purple-200' },
 };
 
@@ -161,7 +161,7 @@ function AddPaymentModal({ clientId, currency, onClose, onAdded }) {
             </div>
             <div className="space-y-1.5">
               <Label className="text-xs font-medium text-gray-600">Currency</Label>
-              <select className="flex h-9 w-full rounded-lg border border-gray-200 bg-white px-3 py-1 text-sm focus:outline-none focus:ring-2 focus:ring-red-500/30 focus:border-red-400"
+              <select className="flex h-9 w-full rounded-lg border border-gray-200 bg-white px-3 py-1 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500/30 focus:border-red-400"
                 value={form.currency} onChange={e => set('currency', e.target.value)}>
                 {['PKR','USD','EUR','GBP'].map(c => <option key={c} value={c}>{c}</option>)}
               </select>
@@ -180,7 +180,7 @@ function AddPaymentModal({ clientId, currency, onClose, onAdded }) {
 
           <div className="space-y-1.5">
             <Label className="text-xs font-medium text-gray-600">Payment Method</Label>
-            <select className="flex h-9 w-full rounded-lg border border-gray-200 bg-white px-3 py-1 text-sm focus:outline-none focus:ring-2 focus:ring-red-500/30 focus:border-red-400"
+            <select className="flex h-9 w-full rounded-lg border border-gray-200 bg-white px-3 py-1 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500/30 focus:border-red-400"
               value={form.method} onChange={e => set('method', e.target.value)}>
               <option value="">Select method</option>
               {PAYMENT_METHODS.map(m => <option key={m} value={m}>{m}</option>)}
@@ -194,14 +194,14 @@ function AddPaymentModal({ clientId, currency, onClose, onAdded }) {
 
           <div className="space-y-1.5">
             <Label className="text-xs font-medium text-gray-600">Notes (optional)</Label>
-            <textarea className="flex w-full rounded-lg border border-gray-200 bg-white px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-red-500/30 focus:border-red-400 resize-none"
+            <textarea className="flex w-full rounded-lg border border-gray-200 bg-white px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500/30 focus:border-red-400 resize-none"
               rows={2} placeholder="Any notes about this payment..." value={form.notes} onChange={e => set('notes', e.target.value)} />
           </div>
         </div>
 
         <div className="flex gap-2 p-5 pt-0">
           <Button variant="outline" className="flex-1" onClick={onClose}>Cancel</Button>
-          <Button className="flex-1 bg-red-600 hover:bg-red-700 text-white" onClick={handleSave} disabled={saving}>
+          <Button className="flex-1 bg-indigo-600 hover:bg-indigo-700 text-white" onClick={handleSave} disabled={saving}>
             {saving ? 'Saving...' : 'Log Payment'}
           </Button>
         </div>
@@ -357,7 +357,7 @@ export default function ClientDetailPage() {
         {/* Client hero card */}
         <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-5 mb-5">
           <div className="flex items-start gap-4">
-            <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-red-500 to-red-700 flex items-center justify-center text-white text-xl font-bold flex-shrink-0 shadow-lg shadow-red-100">
+            <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-red-500 to-red-700 flex items-center justify-center text-white text-xl font-bold flex-shrink-0 shadow-lg shadow-indigo-100">
               {client.brand_name?.charAt(0).toUpperCase()}
             </div>
             <div className="flex-1 min-w-0">
@@ -617,7 +617,7 @@ export default function ClientDetailPage() {
                   <DollarSign className="h-8 w-8 text-gray-200 mx-auto mb-2" />
                   <p className="text-sm text-gray-400">No payments logged yet</p>
                   {canEdit && (
-                    <Button size="sm" className="mt-3 bg-red-600 hover:bg-red-700 text-white"
+                    <Button size="sm" className="mt-3 bg-indigo-600 hover:bg-indigo-700 text-white"
                       onClick={() => setShowPaymentModal(true)}>
                       <Plus className="h-3.5 w-3.5 mr-1" /> Log First Payment
                     </Button>

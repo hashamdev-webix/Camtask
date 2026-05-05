@@ -16,7 +16,7 @@ export default function DuplicateUrlWarning({ blocked, lead, message }) {
   if (!lead) return null;
 
   return (
-    <div className={`rounded-lg border p-4 mt-2 space-y-2 ${blocked ? 'bg-red-50 border-red-200' : 'bg-amber-50 border-amber-200'}`}>
+    <div className={`rounded-lg border p-4 mt-2 space-y-2 ${blocked ? 'bg-red-50 border-indigo-200' : 'bg-amber-50 border-amber-200'}`}>
       <div className="flex items-center gap-2">
         {blocked
           ? <XCircle className="h-4 w-4 text-red-500 flex-shrink-0" />

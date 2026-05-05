@@ -198,7 +198,7 @@ export default function AuditPage() {
                 <div className="flex items-center gap-1.5">
                   <span className="text-xs text-gray-400">Per page:</span>
                   <select
-                    className="h-7 rounded-md border border-gray-200 bg-white px-2 text-xs focus:outline-none focus:ring-2 focus:ring-red-500/30"
+                    className="h-7 rounded-md border border-gray-200 bg-white px-2 text-xs focus:outline-none focus:ring-2 focus:ring-indigo-500/30"
                     value={pageSize}
                     onChange={(e) => {
                       const s = Number(e.target.value);

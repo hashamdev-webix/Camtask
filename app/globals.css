@@ -1,4 +1,4 @@
-@import 'react-phone-number-input/style.css';
+@import "react-phone-number-input/style.css";
 
 @tailwind base;
 @tailwind components;
@@ -6,48 +6,48 @@
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 0 0% 5%;
+    --background: 240 100% 99%;
+    --foreground: 249 47% 20%;
     --card: 0 0% 100%;
-    --card-foreground: 0 0% 5%;
+    --card-foreground: 249 47% 20%;
     --popover: 0 0% 100%;
-    --popover-foreground: 0 0% 5%;
-    --primary: 0 84% 50%;
+    --popover-foreground: 249 47% 20%;
+    --primary: 239 84% 67%;
     --primary-foreground: 0 0% 100%;
-    --secondary: 0 0% 96%;
-    --secondary-foreground: 0 0% 10%;
-    --muted: 0 0% 96%;
-    --muted-foreground: 0 0% 45%;
-    --accent: 0 0% 96%;
-    --accent-foreground: 0 0% 10%;
+    --secondary: 240 100% 97%;
+    --secondary-foreground: 249 47% 20%;
+    --muted: 240 100% 97%;
+    --muted-foreground: 220 9% 46%;
+    --accent: 239 100% 97%;
+    --accent-foreground: 249 47% 20%;
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 0 0% 100%;
-    --border: 0 0% 90%;
-    --input: 0 0% 90%;
-    --ring: 0 84% 50%;
+    --border: 239 68% 92%;
+    --input: 239 68% 92%;
+    --ring: 239 84% 67%;
     --radius: 0.5rem;
   }
 
   .dark {
-    --background: 0 0% 4%;
-    --foreground: 0 0% 98%;
-    --card: 0 0% 7%;
-    --card-foreground: 0 0% 98%;
-    --popover: 0 0% 7%;
-    --popover-foreground: 0 0% 98%;
-    --primary: 0 84% 55%;
+    --background: 249 47% 15%;
+    --foreground: 240 100% 97%;
+    --card: 249 47% 18%;
+    --card-foreground: 240 100% 97%;
+    --popover: 249 47% 18%;
+    --popover-foreground: 240 100% 97%;
+    --primary: 239 84% 67%;
     --primary-foreground: 0 0% 100%;
-    --secondary: 0 0% 12%;
-    --secondary-foreground: 0 0% 98%;
-    --muted: 0 0% 12%;
-    --muted-foreground: 0 0% 60%;
-    --accent: 0 0% 12%;
-    --accent-foreground: 0 0% 98%;
+    --secondary: 249 47% 22%;
+    --secondary-foreground: 240 100% 97%;
+    --muted: 249 47% 22%;
+    --muted-foreground: 220 9% 60%;
+    --accent: 249 47% 22%;
+    --accent-foreground: 240 100% 97%;
     --destructive: 0 62.8% 40%;
-    --destructive-foreground: 0 0% 98%;
-    --border: 0 0% 15%;
-    --input: 0 0% 15%;
-    --ring: 0 84% 55%;
+    --destructive-foreground: 240 100% 97%;
+    --border: 249 47% 25%;
+    --input: 249 47% 25%;
+    --ring: 239 84% 67%;
   }
 }
 
@@ -69,49 +69,98 @@
   background: transparent;
 }
 ::-webkit-scrollbar-thumb {
-  background: #ef4444;
+  background: #6366f1;
   border-radius: 3px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #dc2626;
+  background: #4f46e5;
 }
 
 /* ─── HR Animations ──────────────────────────────────────────────────────── */
 @keyframes fadeUpIn {
-  from { opacity: 0; transform: translateY(18px); }
-  to   { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 @keyframes fadeInScale {
-  from { opacity: 0; transform: scale(0.97) translateY(6px); }
-  to   { opacity: 1; transform: scale(1) translateY(0); }
+  from {
+    opacity: 0;
+    transform: scale(0.97) translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
 }
 @keyframes floatBlob {
-  0%, 100% { transform: translate(0, 0) scale(1); }
-  33%       { transform: translate(10px, -14px) scale(1.06); }
-  66%       { transform: translate(-8px, 10px) scale(0.96); }
+  0%,
+  100% {
+    transform: translate(0, 0) scale(1);
+  }
+  33% {
+    transform: translate(10px, -14px) scale(1.06);
+  }
+  66% {
+    transform: translate(-8px, 10px) scale(0.96);
+  }
 }
 @keyframes floatBlob2 {
-  0%, 100% { transform: translate(0, 0) scale(1); }
-  33%       { transform: translate(-12px, 8px) scale(0.95); }
-  66%       { transform: translate(8px, -10px) scale(1.05); }
+  0%,
+  100% {
+    transform: translate(0, 0) scale(1);
+  }
+  33% {
+    transform: translate(-12px, 8px) scale(0.95);
+  }
+  66% {
+    transform: translate(8px, -10px) scale(1.05);
+  }
 }
 @keyframes shimmer {
-  from { background-position: -200% 0; }
-  to   { background-position:  200% 0; }
+  from {
+    background-position: -200% 0;
+  }
+  to {
+    background-position: 200% 0;
+  }
 }
 @keyframes pulseRingOut {
-  from { transform: scale(1);    opacity: 0.6; }
-  to   { transform: scale(2.5);  opacity: 0; }
+  from {
+    transform: scale(1);
+    opacity: 0.6;
+  }
+  to {
+    transform: scale(2.5);
+    opacity: 0;
+  }
 }
 @keyframes cardGlow {
-  0%, 100% { opacity: 0.15; }
-  50%       { opacity: 0.35; }
+  0%,
+  100% {
+    opacity: 0.15;
+  }
+  50% {
+    opacity: 0.35;
+  }
 }
 
-.animate-fade-up     { animation: fadeUpIn    0.45s cubic-bezier(0.25, 0.46, 0.45, 0.94) both; }
-.animate-fade-scale  { animation: fadeInScale 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94) both; }
-.animate-float-blob  { animation: floatBlob   9s   ease-in-out infinite; }
-.animate-float-blob2 { animation: floatBlob2  13s  ease-in-out infinite; }
+.animate-fade-up {
+  animation: fadeUpIn 0.45s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
+}
+.animate-fade-scale {
+  animation: fadeInScale 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
+}
+.animate-float-blob {
+  animation: floatBlob 9s ease-in-out infinite;
+}
+.animate-float-blob2 {
+  animation: floatBlob2 13s ease-in-out infinite;
+}
 
 .skeleton-shimmer {
   background: linear-gradient(90deg, #f1f5f9 25%, #e2e8f0 50%, #f1f5f9 75%);
@@ -158,7 +207,9 @@
   opacity: 0.7;
   border-color: currentColor;
 }
-.PhoneInputCountrySelect:focus + .PhoneInputCountryIcon + .PhoneInputCountrySelectArrow {
+.PhoneInputCountrySelect:focus
+  + .PhoneInputCountryIcon
+  + .PhoneInputCountrySelectArrow {
   opacity: 1;
   color: hsl(var(--primary));
 }

@@ -551,11 +551,11 @@ export default function AddToolPage() {
             </div>
             <div>
               {step < STEPS.length - 1 ? (
-                <Button size="sm" type="button" onClick={() => setStep(s => s + 1)} className="bg-red-600 hover:bg-red-700 text-white">
+                <Button size="sm" type="button" onClick={() => setStep(s => s + 1)} className="bg-indigo-600 hover:bg-indigo-700 text-white">
                   Next <ArrowRight className="h-4 w-4 ml-1.5" />
                 </Button>
               ) : (
-                <Button size="sm" type="button" onClick={handleSubmit} disabled={saving} className="bg-red-600 hover:bg-red-700 text-white">
+                <Button size="sm" type="button" onClick={handleSubmit} disabled={saving} className="bg-indigo-600 hover:bg-indigo-700 text-white">
                   {saving ? (
                     <><span className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin mr-2" />Saving...</>
                   ) : (

@@ -18,7 +18,7 @@ const STATUS_CONFIG = {
   active:     { label: 'Active',     dot: 'bg-emerald-400', ring: 'ring-emerald-400/30', pill: 'bg-emerald-50 text-emerald-700 ring-1 ring-emerald-200', glow: 'rgba(52,211,153,0.25)' },
   on_leave:   { label: 'On Leave',   dot: 'bg-amber-400',   ring: 'ring-amber-400/30',   pill: 'bg-amber-50 text-amber-700 ring-1 ring-amber-200',     glow: 'rgba(251,191,36,0.2)' },
   inactive:   { label: 'Inactive',   dot: 'bg-gray-400',    ring: 'ring-gray-400/20',    pill: 'bg-gray-100 text-gray-600 ring-1 ring-gray-200',       glow: 'rgba(156,163,175,0.15)' },
-  terminated: { label: 'Terminated', dot: 'bg-red-500',     ring: 'ring-red-500/30',     pill: 'bg-red-50 text-red-700 ring-1 ring-red-200',           glow: 'rgba(239,68,68,0.2)' },
+  terminated: { label: 'Terminated', dot: 'bg-red-500',     ring: 'ring-indigo-500/30',     pill: 'bg-red-50 text-red-700 ring-1 ring-indigo-200',           glow: 'rgba(239,68,68,0.2)' },
   resigned:   { label: 'Resigned',   dot: 'bg-orange-400',  ring: 'ring-orange-400/25',  pill: 'bg-orange-50 text-orange-700 ring-1 ring-orange-200',   glow: 'rgba(251,146,60,0.2)' },
 };
 
@@ -291,7 +291,7 @@ export default function EmployeeDirectoryPage() {
           </Button>
           {canCreate && (
             <Link href="/hr/employees/new">
-              <Button size="sm" className="bg-red-600 hover:bg-red-700 gap-1.5">
+              <Button size="sm" className="bg-indigo-600 hover:bg-indigo-700 gap-1.5">
                 <Plus className="h-4 w-4" />
                 <span className="hidden sm:inline">Add Employee</span>
               </Button>
@@ -310,7 +310,7 @@ export default function EmployeeDirectoryPage() {
               ].map(({ label, value, onChange, options }) => (
                 <div key={label}>
                   <label className="text-xs font-medium text-gray-500 block mb-1">{label}</label>
-                  <select className="h-9 rounded-lg border border-gray-200 bg-white px-3 text-sm focus:outline-none focus:ring-2 focus:ring-red-500/30 min-w-[140px]"
+                  <select className="h-9 rounded-lg border border-gray-200 bg-white px-3 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500/30 min-w-[140px]"
                     value={value} onChange={(e) => onChange(e.target.value)}>
                     {options.map((o) => <option key={o.value} value={o.value}>{o.label}</option>)}
                   </select>
@@ -330,19 +330,19 @@ export default function EmployeeDirectoryPage() {
         {hasFilters && !showFilters && (
           <div className="flex flex-wrap gap-2">
             {department && (
-              <span className="flex items-center gap-1.5 text-xs bg-red-50 text-red-700 border border-red-200 px-2.5 py-1 rounded-full animate-fade-scale">
+              <span className="flex items-center gap-1.5 text-xs bg-red-50 text-red-700 border border-indigo-200 px-2.5 py-1 rounded-full animate-fade-scale">
                 {departments.find((d) => d._id === department)?.name}
                 <button onClick={() => setDepartment('')}><X className="h-3 w-3" /></button>
               </span>
             )}
             {status && (
-              <span className="flex items-center gap-1.5 text-xs bg-red-50 text-red-700 border border-red-200 px-2.5 py-1 rounded-full animate-fade-scale">
+              <span className="flex items-center gap-1.5 text-xs bg-red-50 text-red-700 border border-indigo-200 px-2.5 py-1 rounded-full animate-fade-scale">
                 {STATUS_CONFIG[status]?.label}
                 <button onClick={() => setStatus('')}><X className="h-3 w-3" /></button>
               </span>
             )}
             {employmentType && (
-              <span className="flex items-center gap-1.5 text-xs bg-red-50 text-red-700 border border-red-200 px-2.5 py-1 rounded-full animate-fade-scale">
+              <span className="flex items-center gap-1.5 text-xs bg-red-50 text-red-700 border border-indigo-200 px-2.5 py-1 rounded-full animate-fade-scale">
                 {TYPE_LABELS[employmentType]}
                 <button onClick={() => setEmploymentType('')}><X className="h-3 w-3" /></button>
               </span>
@@ -364,7 +364,7 @@ export default function EmployeeDirectoryPage() {
             <p className="text-xs text-gray-400 mt-1">Try adjusting your search or filters</p>
             {canCreate && (
               <Link href="/hr/employees/new">
-                <Button size="sm" className="mt-6 bg-red-600 hover:bg-red-700 gap-1.5 shadow-lg shadow-red-100">
+                <Button size="sm" className="mt-6 bg-indigo-600 hover:bg-indigo-700 gap-1.5 shadow-lg shadow-indigo-100">
                   <Plus className="h-4 w-4" /> Add First Employee
                 </Button>
               </Link>

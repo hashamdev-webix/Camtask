@@ -22,7 +22,7 @@ const STATUS_CONFIG = {
   active:     { label: 'Active',     dot: 'bg-emerald-400', pill: 'bg-emerald-50 text-emerald-700 ring-1 ring-emerald-200', glow: 'rgba(52,211,153,0.3)' },
   on_leave:   { label: 'On Leave',   dot: 'bg-amber-400',   pill: 'bg-amber-50 text-amber-700 ring-1 ring-amber-200',       glow: 'rgba(251,191,36,0.25)' },
   inactive:   { label: 'Inactive',   dot: 'bg-gray-400',    pill: 'bg-gray-100 text-gray-600 ring-1 ring-gray-200',         glow: 'rgba(156,163,175,0.2)' },
-  terminated: { label: 'Terminated', dot: 'bg-red-500',     pill: 'bg-red-50 text-red-700 ring-1 ring-red-200',             glow: 'rgba(239,68,68,0.3)' },
+  terminated: { label: 'Terminated', dot: 'bg-red-500',     pill: 'bg-red-50 text-red-700 ring-1 ring-indigo-200',             glow: 'rgba(239,68,68,0.3)' },
   resigned:   { label: 'Resigned',   dot: 'bg-orange-400',  pill: 'bg-orange-50 text-orange-700 ring-1 ring-orange-200',    glow: 'rgba(251,146,60,0.25)' },
 };
 const TYPE_LABELS  = { full_time: 'Full-Time', part_time: 'Part-Time', contract: 'Contract', intern: 'Intern' };
@@ -49,7 +49,7 @@ function Field({ label, required, children }) {
 }
 function SelectField({ value, onChange, options, placeholder }) {
   return (
-    <select className="flex h-9 w-full rounded-lg border border-gray-200 bg-white px-3 py-1 text-sm focus:outline-none focus:ring-2 focus:ring-red-500/30 focus:border-red-400 transition-colors" value={value} onChange={(e) => onChange(e.target.value)}>
+    <select className="flex h-9 w-full rounded-lg border border-gray-200 bg-white px-3 py-1 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500/30 focus:border-red-400 transition-colors" value={value} onChange={(e) => onChange(e.target.value)}>
       {placeholder && <option value="">{placeholder}</option>}
       {options.map((o) => <option key={o.value} value={o.value}>{o.label}</option>)}
     </select>
@@ -117,11 +117,11 @@ function StatusModal({ current, onClose, onSave }) {
           <SelectField value={newStatus} onChange={setNewStatus} options={Object.entries(STATUS_CONFIG).map(([k, v]) => ({ value: k, label: v.label }))} />
         </Field>
         <Field label="Reason">
-          <textarea className="w-full rounded-lg border border-gray-200 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-red-500/30 focus:border-red-400 min-h-[90px] resize-none" placeholder="Reason for this change…" value={reason} onChange={(e) => setReason(e.target.value)} />
+          <textarea className="w-full rounded-lg border border-gray-200 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500/30 focus:border-red-400 min-h-[90px] resize-none" placeholder="Reason for this change…" value={reason} onChange={(e) => setReason(e.target.value)} />
         </Field>
         <div className="flex gap-2 justify-end pt-1">
           <Button variant="outline" size="sm" onClick={onClose}>Cancel</Button>
-          <Button size="sm" disabled={saving || newStatus === current} onClick={async () => { setSaving(true); await onSave(newStatus, reason); setSaving(false); }} className="bg-red-600 hover:bg-red-700">
+          <Button size="sm" disabled={saving || newStatus === current} onClick={async () => { setSaving(true); await onSave(newStatus, reason); setSaving(false); }} className="bg-indigo-600 hover:bg-indigo-700">
             {saving ? 'Saving…' : 'Update Status'}
           </Button>
         </div>
@@ -147,7 +147,7 @@ function SalaryModal({ current, onClose, onSave }) {
         {net > 0 && <div className="rounded-xl bg-gradient-to-r from-emerald-50 to-teal-50 border border-emerald-100 p-3 flex items-center justify-between"><span className="text-xs font-medium text-emerald-700">Net Salary</span><span className="text-lg font-bold text-emerald-700">PKR {net.toLocaleString()}</span></div>}
         <div className="flex gap-2 justify-end">
           <Button variant="outline" size="sm" onClick={onClose}>Cancel</Button>
-          <Button size="sm" disabled={saving} onClick={async () => { if (!form.newSalary || !form.effectiveDate) { toast({ title: 'Salary and date required', variant: 'destructive' }); return; } setSaving(true); await onSave(form); setSaving(false); }} className="bg-red-600 hover:bg-red-700">{saving ? 'Saving…' : 'Save Revision'}</Button>
+          <Button size="sm" disabled={saving} onClick={async () => { if (!form.newSalary || !form.effectiveDate) { toast({ title: 'Salary and date required', variant: 'destructive' }); return; } setSaving(true); await onSave(form); setSaving(false); }} className="bg-indigo-600 hover:bg-indigo-700">{saving ? 'Saving…' : 'Save Revision'}</Button>
         </div>
       </div>
     </Modal>
@@ -409,7 +409,7 @@ export default function EmployeeProfilePage() {
                 )}
                 {canEdit && !editing && (
                   <Button size="sm" onClick={() => setEditing(true)}
-                    className="bg-red-600 hover:bg-red-500 text-white gap-1.5">
+                    className="bg-red-600 hover:bg-indigo-500 text-white gap-1.5">
                     <Edit3 className="h-4 w-4" /> Edit Profile
                   </Button>
                 )}
@@ -660,7 +660,7 @@ export default function EmployeeProfilePage() {
                 </div>
               )}
               {!editing && (
-                <div className="bg-gradient-to-r from-red-600 to-red-700 rounded-2xl p-5 flex items-center justify-between text-white shadow-lg shadow-red-200">
+                <div className="bg-gradient-to-r from-red-600 to-red-700 rounded-2xl p-5 flex items-center justify-between text-white shadow-lg shadow-indigo-200">
                   <div><p className="text-sm font-medium text-red-100">Net Take-Home</p><p className="text-xs text-red-200/70 mt-0.5">Basic + Allowances − Deductions</p></div>
                   <div className="text-right"><p className="text-3xl font-bold">PKR {netSalary.toLocaleString()}</p></div>
                 </div>
@@ -735,7 +735,7 @@ export default function EmployeeProfilePage() {
               <div className="flex items-center justify-between">
                 <p className="text-sm text-gray-500">{docs.length} document{docs.length !== 1 ? 's' : ''}</p>
                 <label className="cursor-pointer">
-                  <Button size="sm" className="bg-red-600 hover:bg-red-700 gap-1.5" asChild>
+                  <Button size="sm" className="bg-indigo-600 hover:bg-indigo-700 gap-1.5" asChild>
                     <span>{uploadingDoc ? <><span className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" /> Uploading…</> : <><Upload className="h-4 w-4" /> Upload Document</>}</span>
                   </Button>
                   <input type="file" className="hidden" disabled={uploadingDoc} onChange={uploadDoc} accept=".jpg,.jpeg,.png,.pdf,.doc,.docx,.webp" />
@@ -838,7 +838,7 @@ export default function EmployeeProfilePage() {
                   <div className="w-14 h-14 rounded-2xl bg-orange-50 flex items-center justify-center mx-auto mb-3"><LogOut className="h-7 w-7 text-orange-400" /></div>
                   <p className="text-sm font-medium text-gray-600">No exit process initiated</p>
                   <p className="text-xs text-gray-400 mt-1 mb-5">Use this to manage resignations, terminations, and retirements</p>
-                  <Button size="sm" onClick={() => setShowExitForm(true)} className="border-red-200 bg-red-50 text-red-600 hover:bg-red-600 hover:text-white transition-colors gap-1.5">
+                  <Button size="sm" onClick={() => setShowExitForm(true)} className="border-indigo-200 bg-red-50 text-red-600 hover:bg-red-600 hover:text-white transition-colors gap-1.5">
                     <LogOut className="h-4 w-4" /> Initiate Exit Process
                   </Button>
                 </div>
@@ -856,13 +856,13 @@ export default function EmployeeProfilePage() {
                     <Field label="Last Working Day"><Input type="date" className="h-9" value={exitForm.lastWorkingDay} onChange={(e) => setExitForm((p) => ({ ...p, lastWorkingDay: e.target.value }))} /></Field>
                     <Field label="Notice Period (Days)"><Input type="number" className="h-9" value={exitForm.noticePeriodDays} onChange={(e) => setExitForm((p) => ({ ...p, noticePeriodDays: e.target.value }))} min="0" /></Field>
                   </div>
-                  <Field label="Exit Reason"><textarea className="w-full rounded-lg border border-gray-200 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-red-500/30 min-h-[80px] resize-none" value={exitForm.exitReason} onChange={(e) => setExitForm((p) => ({ ...p, exitReason: e.target.value }))} /></Field>
+                  <Field label="Exit Reason"><textarea className="w-full rounded-lg border border-gray-200 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500/30 min-h-[80px] resize-none" value={exitForm.exitReason} onChange={(e) => setExitForm((p) => ({ ...p, exitReason: e.target.value }))} /></Field>
                   <div className="flex flex-wrap gap-4">
                     <label className="flex items-center gap-2 text-sm text-gray-700 cursor-pointer"><input type="checkbox" className="rounded" checked={exitForm.noticePeriodWaived} onChange={(e) => setExitForm((p) => ({ ...p, noticePeriodWaived: e.target.checked }))} />Notice period waived</label>
                     <label className="flex items-center gap-2 text-sm text-gray-700 cursor-pointer"><input type="checkbox" className="rounded" checked={exitForm.exitInterviewConducted} onChange={(e) => setExitForm((p) => ({ ...p, exitInterviewConducted: e.target.checked }))} />Exit interview conducted</label>
                   </div>
-                  {exitForm.exitInterviewConducted && <Field label="Interview Notes"><textarea className="w-full rounded-lg border border-gray-200 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-red-500/30 min-h-[80px] resize-none" value={exitForm.exitInterviewNotes} onChange={(e) => setExitForm((p) => ({ ...p, exitInterviewNotes: e.target.value }))} /></Field>}
-                  <div className="flex gap-2"><Button variant="outline" size="sm" onClick={() => setShowExitForm(false)}>Cancel</Button><Button size="sm" onClick={initiateExit} className="bg-red-600 hover:bg-red-700">Initiate Exit</Button></div>
+                  {exitForm.exitInterviewConducted && <Field label="Interview Notes"><textarea className="w-full rounded-lg border border-gray-200 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500/30 min-h-[80px] resize-none" value={exitForm.exitInterviewNotes} onChange={(e) => setExitForm((p) => ({ ...p, exitInterviewNotes: e.target.value }))} /></Field>}
+                  <div className="flex gap-2"><Button variant="outline" size="sm" onClick={() => setShowExitForm(false)}>Cancel</Button><Button size="sm" onClick={initiateExit} className="bg-indigo-600 hover:bg-indigo-700">Initiate Exit</Button></div>
                 </div>
               )}
 

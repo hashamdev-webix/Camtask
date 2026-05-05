@@ -109,7 +109,7 @@ function CreateUserDialog({ open, onClose, onCreate }) {
               </SelectContent>
             </Select>
           </div>
-          {error && <div className="bg-red-50 border border-red-200 text-red-700 text-sm px-4 py-3 rounded-md">{error}</div>}
+          {error && <div className="bg-red-50 border border-indigo-200 text-red-700 text-sm px-4 py-3 rounded-md">{error}</div>}
           <DialogFooter>
             <Button type="button" variant="outline" onClick={onClose}>Cancel</Button>
             <Button type="submit" disabled={loading}>{loading ? 'Creating...' : 'Create Member'}</Button>
@@ -217,7 +217,7 @@ function EditUserDialog({ user, open, onClose, onUpdate }) {
             <Label>New Password <span className="text-gray-400 text-xs font-normal">(leave blank to keep current)</span></Label>
             <Input type="password" placeholder="At least 8 characters" value={form.newPassword} onChange={(e) => setForm((f) => ({ ...f, newPassword: e.target.value }))} minLength={8} />
           </div>
-          {error && <div className="bg-red-50 border border-red-200 text-red-700 text-sm px-4 py-3 rounded-md">{error}</div>}
+          {error && <div className="bg-red-50 border border-indigo-200 text-red-700 text-sm px-4 py-3 rounded-md">{error}</div>}
           <DialogFooter>
             <Button type="button" variant="outline" onClick={onClose}>Cancel</Button>
             <Button type="submit" disabled={loading}>{loading ? 'Saving...' : 'Save Changes'}</Button>

@@ -62,7 +62,7 @@ function KpiCard({ label, value, sub, trend, trendInverse, icon: Icon, iconBg, i
   return (
     <div
       onClick={onClick}
-      className={`bg-white rounded-2xl border p-5 flex flex-col gap-3 shadow-sm transition-all duration-200 hover:shadow-md hover:-translate-y-0.5 ${accent ? 'border-red-200 ring-1 ring-red-100' : 'border-gray-100'} ${onClick ? 'cursor-pointer' : ''}`}
+      className={`bg-white rounded-2xl border p-5 flex flex-col gap-3 shadow-sm transition-all duration-200 hover:shadow-md hover:-translate-y-0.5 ${accent ? 'border-indigo-200 ring-1 ring-indigo-100' : 'border-gray-100'} ${onClick ? 'cursor-pointer' : ''}`}
     >
       <div className="flex items-start justify-between">
         <div className={`w-10 h-10 rounded-xl ${iconBg} flex items-center justify-center flex-shrink-0`}>
@@ -226,8 +226,8 @@ export default function BusinessDashboard() {
         </div>
 
         {/* ── PROFIT HERO ── */}
-        <div className={`rounded-2xl p-6 mb-5 border flex flex-col md:flex-row md:items-center gap-4 ${isProfit ? 'bg-gradient-to-r from-emerald-50 to-teal-50 border-emerald-200' : 'bg-gradient-to-r from-red-50 to-orange-50 border-red-200'}`}>
-          <div className={`w-14 h-14 rounded-2xl flex items-center justify-center flex-shrink-0 shadow-lg ${isProfit ? 'bg-emerald-500 shadow-emerald-200' : 'bg-red-500 shadow-red-200'}`}>
+        <div className={`rounded-2xl p-6 mb-5 border flex flex-col md:flex-row md:items-center gap-4 ${isProfit ? 'bg-gradient-to-r from-emerald-50 to-teal-50 border-emerald-200' : 'bg-gradient-to-r from-red-50 to-orange-50 border-indigo-200'}`}>
+          <div className={`w-14 h-14 rounded-2xl flex items-center justify-center flex-shrink-0 shadow-lg ${isProfit ? 'bg-emerald-500 shadow-emerald-200' : 'bg-red-500 shadow-indigo-200'}`}>
             {isProfit ? <TrendingUp className="h-7 w-7 text-white" /> : <TrendingDown className="h-7 w-7 text-white" />}
           </div>
           <div className="flex-1">

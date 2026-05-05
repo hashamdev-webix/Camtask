@@ -224,7 +224,7 @@ export default function AddClientPage() {
   };
 
   // Error-aware input className helper
-  const inputCls = (field) => cn('h-9', errors[field] && 'border-red-400 focus-visible:ring-red-400');
+  const inputCls = (field) => cn('h-9', errors[field] && 'border-red-400 focus-visible:ring-indigo-400');
 
   // ── Step 0 — Client Info ───────────────────────────────────────────────────
   const Step0 = (
@@ -285,7 +285,7 @@ export default function AddClientPage() {
           </Field>
 
           <Field label="Phone Number" required error={errors.phone}>
-            <div className={cn(errors.phone && 'rounded-md ring-1 ring-red-400')}>
+            <div className={cn(errors.phone && 'rounded-md ring-1 ring-indigo-400')}>
               <PhoneInputField value={form.phone}
                 onChange={v => { set('phone', v || ''); setErrors(x => ({...x, phone: undefined})); }}
                 placeholder="Primary contact number" />
@@ -733,7 +733,7 @@ export default function AddClientPage() {
 
           {/* Error Banner */}
           {Object.keys(errors).length > 0 && (
-            <div className="flex items-center gap-2 bg-red-50 border border-red-200 rounded-lg px-4 py-3">
+            <div className="flex items-center gap-2 bg-red-50 border border-indigo-200 rounded-lg px-4 py-3">
               <AlertCircle className="h-4 w-4 text-red-500 flex-shrink-0" />
               <p className="text-sm text-red-600">Please fill all required fields marked with <span className="font-bold">*</span> before continuing.</p>
             </div>
@@ -760,11 +760,11 @@ export default function AddClientPage() {
             </div>
             <div>
               {step < STEPS.length - 1 ? (
-                <Button size="sm" type="button" onClick={handleNext} className="bg-red-600 hover:bg-red-700 text-white">
+                <Button size="sm" type="button" onClick={handleNext} className="bg-indigo-600 hover:bg-indigo-700 text-white">
                   Next <ArrowRight className="h-4 w-4 ml-1.5" />
                 </Button>
               ) : (
-                <Button size="sm" type="button" onClick={handleSubmit} disabled={saving} className="bg-red-600 hover:bg-red-700 text-white">
+                <Button size="sm" type="button" onClick={handleSubmit} disabled={saving} className="bg-indigo-600 hover:bg-indigo-700 text-white">
                   {saving ? (
                     <><span className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin mr-2" />Saving...</>
                   ) : (

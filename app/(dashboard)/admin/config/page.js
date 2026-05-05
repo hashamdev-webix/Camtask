@@ -96,7 +96,7 @@ function AssignModal({ item, entity, users, onClose, onSaved }) {
                 key={u._id}
                 onClick={() => toggle(u._id)}
                 className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-left transition-colors ${
-                  checked ? 'bg-red-50 border border-red-200' : 'hover:bg-gray-50 border border-transparent'
+                  checked ? 'bg-red-50 border border-indigo-200' : 'hover:bg-gray-50 border border-transparent'
                 }`}
               >
                 <span className={`w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold flex-shrink-0 ${
@@ -116,7 +116,7 @@ function AssignModal({ item, entity, users, onClose, onSaved }) {
 
         <DialogFooter className="gap-2">
           <Button variant="outline" size="sm" onClick={onClose}>Cancel</Button>
-          <Button size="sm" disabled={saving} onClick={save} className="bg-red-600 hover:bg-red-700 text-white">
+          <Button size="sm" disabled={saving} onClick={save} className="bg-indigo-600 hover:bg-indigo-700 text-white">
             {saving ? 'Saving…' : 'Save Assignments'}
           </Button>
         </DialogFooter>

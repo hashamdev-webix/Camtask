@@ -74,7 +74,7 @@ export default function HRDashboardPage() {
   const summaryCards = [
     { label: 'Active Employees', value: summary.totalActive ?? 0, icon: UserCheck, color: 'bg-emerald-50 text-emerald-600', border: 'border-emerald-200' },
     { label: 'On Leave', value: summary.onLeave ?? 0, icon: Clock, color: 'bg-amber-50 text-amber-600', border: 'border-amber-200' },
-    { label: 'Inactive / Exited', value: summary.totalInactive ?? 0, icon: UserX, color: 'bg-red-50 text-red-600', border: 'border-red-200' },
+    { label: 'Inactive / Exited', value: summary.totalInactive ?? 0, icon: UserX, color: 'bg-red-50 text-red-600', border: 'border-indigo-200' },
     { label: 'Departments', value: summary.totalDepts ?? 0, icon: Building2, color: 'bg-blue-50 text-blue-600', border: 'border-blue-200' },
   ];
 
@@ -86,7 +86,7 @@ export default function HRDashboardPage() {
         {/* Quick Actions */}
         <div className="flex flex-wrap gap-3">
           <Link href="/hr/employees/new">
-            <Button size="sm" className="bg-red-600 hover:bg-red-700">
+            <Button size="sm" className="bg-indigo-600 hover:bg-indigo-700">
               <Plus className="h-4 w-4 mr-2" /> Add Employee
             </Button>
           </Link>

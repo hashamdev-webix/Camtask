@@ -177,7 +177,7 @@ export default function ClientsPage() {
           )}
 
           <div className="ml-auto">
-            <Button size="sm" onClick={() => router.push('/clients/new')} className="bg-red-600 hover:bg-red-700 text-white">
+            <Button size="sm" onClick={() => router.push('/clients/new')} className="bg-indigo-600 hover:bg-indigo-700 text-white">
               <Plus className="h-4 w-4 mr-1" /> Add Client
             </Button>
           </div>
@@ -208,7 +208,7 @@ export default function ClientsPage() {
                     <td colSpan={7} className="text-center py-16">
                       <Users className="h-8 w-8 text-gray-200 mx-auto mb-2" />
                       <p className="text-gray-400 text-sm">No clients found.</p>
-                      <Button size="sm" onClick={() => router.push('/clients/new')} className="mt-3 bg-red-600 hover:bg-red-700 text-white">
+                      <Button size="sm" onClick={() => router.push('/clients/new')} className="mt-3 bg-indigo-600 hover:bg-indigo-700 text-white">
                         <Plus className="h-4 w-4 mr-1" /> Add First Client
                       </Button>
                     </td>

@@ -811,7 +811,7 @@ function ToolForm({ categories, users, onSuccess, onClose, editTool = null }) {
         <Button
           onClick={handleSubmit}
           disabled={saving}
-          className="bg-red-600 hover:bg-red-700 text-white"
+          className="bg-indigo-600 hover:bg-indigo-700 text-white"
         >
           {saving ? "Saving..." : editTool ? "Update Tool" : "Add Tool"}
         </Button>
@@ -1272,7 +1272,7 @@ function ToolDetailDrawer({
                 <Button
                   size="sm"
                   onClick={submitAssign}
-                  className="bg-red-600 hover:bg-red-700 text-white"
+                  className="bg-indigo-600 hover:bg-indigo-700 text-white"
                 >
                   <UserPlus className="h-3.5 w-3.5 mr-1" /> Assign Access
                 </Button>
@@ -1859,7 +1859,7 @@ export default function ToolsPage() {
               <Button
                 size="sm"
                 onClick={() => router.push("/hr/tools/new")}
-                className="bg-red-600 hover:bg-red-700 text-white"
+                className="bg-indigo-600 hover:bg-indigo-700 text-white"
               >
                 <Plus className="h-4 w-4 mr-1" /> Add Tool
               </Button>

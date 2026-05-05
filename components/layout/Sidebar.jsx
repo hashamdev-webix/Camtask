@@ -206,7 +206,7 @@ export default function Sidebar() {
       {/* Sidebar */}
       <aside
         className={cn(
-          "fixed inset-y-0 left-0 z-50 w-64 bg-black text-white flex flex-col transition-transform duration-300 ease-in-out",
+          "fixed inset-y-0 left-0 z-50 w-64 bg-gradient-to-b from-indigo-50 to-indigo-100/50 border-r border-indigo-200 text-indigo-900 flex flex-col transition-transform duration-300 ease-in-out",
           "md:static md:translate-x-0 md:z-auto md:h-screen md:flex-shrink-0",
           isOpen ? "translate-x-0" : "-translate-x-full",
         )}
@@ -223,19 +223,21 @@ export default function Sidebar() {
             />
           </div>
           <div className="flex-1">
-            <h1 className="font-bold text-lg leading-none">Camtask</h1>
-            <p className="text-xs text-zinc-400 mt-0.5">Business Dashboard</p>
+            <h1 className="font-bold text-lg leading-none text-indigo-900">
+              Camtask
+            </h1>
+            <p className="text-xs text-indigo-600 mt-0.5">Business Dashboard</p>
           </div>
           <button
             onClick={close}
-            className="md:hidden p-1.5 rounded-lg text-zinc-400 hover:text-white hover:bg-zinc-800 transition-colors"
+            className="md:hidden p-1.5 rounded-lg text-indigo-400 hover:text-indigo-900 hover:bg-indigo-100 transition-colors"
             aria-label="Close menu"
           >
             <X className="h-5 w-5" />
           </button>
         </div>
 
-        <Separator className="bg-zinc-800 flex-shrink-0" />
+        <Separator className="bg-indigo-200 flex-shrink-0" />
 
         {/* Navigation */}
         <nav className="flex-1 p-4 space-y-0.5 overflow-y-auto">
@@ -245,7 +247,7 @@ export default function Sidebar() {
               return (
                 <p
                   key={`section-${i}`}
-                  className="text-xs font-semibold text-zinc-500 uppercase tracking-wider pt-4 pb-1 px-3"
+                  className="text-xs font-semibold text-indigo-500 uppercase tracking-wider pt-4 pb-1 px-3"
                 >
                   {item.section}
                 </p>
@@ -266,8 +268,8 @@ export default function Sidebar() {
                 className={cn(
                   "flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium transition-all",
                   isActive
-                    ? "bg-red-600 text-white shadow-sm"
-                    : "text-zinc-300 hover:bg-zinc-900 hover:text-white",
+                    ? "bg-indigo-600 text-white shadow-sm"
+                    : "text-indigo-700 hover:bg-indigo-100 hover:text-indigo-900",
                 )}
               >
                 <Icon className="h-4 w-4 flex-shrink-0" />
@@ -278,19 +280,19 @@ export default function Sidebar() {
           })}
         </nav>
 
-        <Separator className="bg-zinc-800 flex-shrink-0" />
+        <Separator className="bg-indigo-200 flex-shrink-0" />
 
         {/* User info + logout */}
         <div className="p-4 flex-shrink-0">
           <div className="flex items-center gap-3 mb-3 px-1">
-            <div className="w-8 h-8 rounded-full bg-red-600 flex items-center justify-center text-xs font-bold flex-shrink-0">
+            <div className="w-8 h-8 rounded-full bg-indigo-600 flex items-center justify-center text-xs font-bold flex-shrink-0 text-white">
               {session?.user?.name?.[0]?.toUpperCase() || "U"}
             </div>
             <div className="overflow-hidden">
-              <p className="text-sm font-medium text-white truncate">
+              <p className="text-sm font-medium text-indigo-900 truncate">
                 {session?.user?.name}
               </p>
-              <p className="text-xs text-zinc-400 truncate capitalize">
+              <p className="text-xs text-indigo-600 truncate capitalize">
                 {role?.replace("_", " ")}
               </p>
             </div>
@@ -298,7 +300,7 @@ export default function Sidebar() {
           <Button
             variant="ghost"
             size="sm"
-            className="w-full justify-start text-zinc-300 hover:text-white hover:bg-zinc-900"
+            className="w-full justify-start text-indigo-700 hover:text-indigo-900 hover:bg-indigo-100"
             onClick={() => signOut({ callbackUrl: "/login" })}
           >
             <LogOut className="h-4 w-4 mr-2" />

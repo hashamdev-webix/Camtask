@@ -155,7 +155,7 @@ function FollowUpCard({ fu, onComplete }) {
       fu.completed_at
         ? 'bg-gray-50 border-gray-200 opacity-60'
         : overdueFu
-        ? 'bg-red-50 border-red-300 shadow-sm ring-1 ring-red-200'
+        ? 'bg-red-50 border-red-300 shadow-sm ring-1 ring-indigo-200'
         : 'bg-white border-gray-200 hover:border-gray-300'
     }`}>
       {/* Icon */}
@@ -196,7 +196,7 @@ function FollowUpCard({ fu, onComplete }) {
         <Button
           size="sm"
           variant={overdueFu ? 'default' : 'outline'}
-          className={overdueFu ? 'bg-red-600 hover:bg-red-700 text-white flex-shrink-0' : 'flex-shrink-0'}
+          className={overdueFu ? 'bg-indigo-600 hover:bg-indigo-700 text-white flex-shrink-0' : 'flex-shrink-0'}
           onClick={() => onComplete(fu)}
         >
           <CheckCircle className="h-3.5 w-3.5 mr-1" />

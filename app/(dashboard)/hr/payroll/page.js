@@ -474,7 +474,7 @@ function EditableCell({ value, onChange, min = 0, width = "w-24" }) {
       onChange={(e) =>
         onChange(e.target.value === "" ? 0 : Number(e.target.value))
       }
-      className={`h-7 ${width} text-xs text-center px-1 border-gray-200 focus:border-red-400 focus:ring-red-100`}
+      className={`h-7 ${width} text-xs text-center px-1 border-gray-200 focus:border-red-400 focus:ring-indigo-100`}
     />
   );
 }
@@ -922,7 +922,7 @@ export default function PayrollPage() {
                     onClick={() =>
                       printMultipleSlips(filtered, monthName, year)
                     }
-                    className="h-9 bg-red-600 hover:bg-red-700 text-white"
+                    className="h-9 bg-indigo-600 hover:bg-indigo-700 text-white"
                   >
                     <Printer className="h-3.5 w-3.5 mr-1.5" />
                     Print All ({filtered.length})

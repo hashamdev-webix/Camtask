@@ -66,7 +66,7 @@ function DeptFormDialog({ dept, onClose, onSave }) {
         </div>
         <div className="flex gap-2 mt-5 justify-end">
           <Button variant="outline" size="sm" onClick={onClose}>Cancel</Button>
-          <Button size="sm" disabled={saving} onClick={handleSave} className="bg-red-600 hover:bg-red-700">
+          <Button size="sm" disabled={saving} onClick={handleSave} className="bg-indigo-600 hover:bg-indigo-700">
             {saving ? 'Saving...' : <><Save className="h-4 w-4 mr-1.5" /> Save</>}
           </Button>
         </div>
@@ -171,7 +171,7 @@ export default function DepartmentsPage() {
                   {seeding ? 'Creating...' : 'Add Default Departments'}
                 </Button>
               )}
-              <Button size="sm" className="bg-red-600 hover:bg-red-700" onClick={() => setShowForm(true)}>
+              <Button size="sm" className="bg-indigo-600 hover:bg-indigo-700" onClick={() => setShowForm(true)}>
                 <Plus className="h-4 w-4 mr-1.5" /> New Department
               </Button>
             </div>
@@ -192,7 +192,7 @@ export default function DepartmentsPage() {
             {canManage && (
               <div className="flex gap-2 justify-center">
                 <Button size="sm" variant="outline" onClick={handleSeedDefaults}>Add Default Departments</Button>
-                <Button size="sm" className="bg-red-600 hover:bg-red-700" onClick={() => setShowForm(true)}>
+                <Button size="sm" className="bg-indigo-600 hover:bg-indigo-700" onClick={() => setShowForm(true)}>
                   <Plus className="h-4 w-4 mr-1.5" /> New Department
                 </Button>
               </div>
