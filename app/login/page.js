@@ -65,10 +65,10 @@ export default function LoginPage() {
             style={{ animation: "float 3s ease-in-out infinite" }}
           >
             <Image
-              src="/logo.jpeg"
-              alt="Walshkon logo"
-              width={82}
-              height={82}
+              src="/logo.png"
+              alt="Camtask Logo"
+              width={80}
+              height={80}
               className="rounded-lg transition-transform duration-300 group-hover:scale-105"
             />
           </div>

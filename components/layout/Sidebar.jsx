@@ -215,10 +215,10 @@ export default function Sidebar() {
         <div className="p-6 flex items-center gap-3 flex-shrink-0">
           <div className="p-2 rounded-lg">
             <Image
-              src="/logo.jpeg"
-              alt="Walshkon logo"
-              width={52}
-              height={52}
+              src="/logo.png"
+              alt="Camtask Logo"
+              width={40}
+              height={40}
               className="rounded-lg"
             />
           </div>
