@@ -512,6 +512,42 @@ function EntityForm({ entity, platforms, item, onSave, onCancel }) {
               required
             />
           </div>
+          {isAdmin && (
+            <>
+              <div className="space-y-1">
+                <Label>Username (optional)</Label>
+                <Input
+                  value={form.username || ""}
+                  onChange={(e) => set("username", e.target.value)}
+                  placeholder="Email account username"
+                />
+              </div>
+              <div className="space-y-1">
+                <Label>Password (optional)</Label>
+                <div className="relative">
+                  <Input
+                    type={showPassword ? "text" : "password"}
+                    value={form.password || ""}
+                    onChange={(e) => set("password", e.target.value)}
+                    placeholder="Email account password"
+                    autoComplete="new-password"
+                    className="pr-10"
+                  />
+                  <button
+                    type="button"
+                    onClick={() => setShowPassword(!showPassword)}
+                    className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 transition-colors"
+                  >
+                    {showPassword ? (
+                      <EyeOff className="h-4 w-4" />
+                    ) : (
+                      <Eye className="h-4 w-4" />
+                    )}
+                  </button>
+                </div>
+              </div>
+            </>
+          )}
         </>
       )}
 
